@@ -352,60 +352,8 @@
     <section class="products" id="products">
         <div class="container">
             <h2 class="section-title">Featured Collection</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600" alt="Premium T-Shirt" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-name">Classic Premium Tee</h3>
-                        <p class="product-price">$89.00</p>
-                        <div class="size-selector">
-                            <select id="size-tee">
-                                <option>Select Size</option>
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>
-                                <option>XL</option>
-                            </select>
-                        </div>
-                        <button class="btn" onclick="addToCart('Classic Premium Tee', 89, 'size-tee')">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600" alt="Luxury Hoodie" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-name">Signature Hoodie</h3>
-                        <p class="product-price">$149.00</p>
-                        <div class="size-selector">
-                            <select id="size-hoodie">
-                                <option>Select Size</option>
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>
-                                <option>XL</option>
-                            </select>
-                        </div>
-                        <button class="btn" onclick="addToCart('Signature Hoodie', 149, 'size-hoodie')">Add to Cart</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600" alt="Designer Pants" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-name">Tailored Joggers</h3>
-                        <p class="product-price">$129.00</p>
-                        <div class="size-selector">
-                            <select id="size-joggers">
-                                <option>Select Size</option>
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>
-                                <option>XL</option>
-                            </select>
-                        </div>
-                        <button class="btn" onclick="addToCart('Tailored Joggers', 129, 'size-joggers')">Add to Cart</button>
-                    </div>
-                </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded here by JavaScript -->
             </div>
         </div>
     </section>
@@ -458,10 +406,10 @@
                 <div class="payment-icon">💳 VISA</div>
                 <div class="payment-icon">💳 MASTERCARD</div>
                 <div class="payment-icon">💳 AMEX</div>
-                <div class="payment-icon">💰 STRIPE</div>
-                <div class="payment-icon">📱 APPLE PAY</div>
+                <div class="payment-icon">💰 UPI</div>
+                <div class="payment-icon">📱 PAYTM</div>
                 <div class="payment-icon">📱 GOOGLE PAY</div>
-                <div class="payment-icon">💵 PAYPAL</div>
+                <div class="payment-icon">💵 RAZORPAY</div>
             </div>
         </div>
     </section>
@@ -470,7 +418,7 @@
         <div class="container">
             <p>&copy; 2025 GrabCasually. All Rights Reserved.</p>
             <p style="margin-top: 10px;">Luxury Casual Wear | Premium Quality | Worldwide Shipping</p>
-            <p style="margin-top: 15px;">📧 contact@grabcasually.com | 📱 +1 (555) 123-4567</p>
+            <p style="margin-top: 15px;">📧 contact@grabcasually.com | 📱 +91 98765 43210</p>
         </div>
     </footer>
 
@@ -483,7 +431,76 @@
     </div>
 
     <script>
+        // PRODUCT DATABASE - EDIT THIS TO ADD/REMOVE PRODUCTS
+        const products = [
+            {
+                name: "Classic Premium Tee",
+                price: 2499,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                name: "Signature Hoodie",
+                price: 3999,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                name: "Tailored Joggers",
+                price: 3499,
+                image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                name: "Premium Polo Shirt",
+                price: 2799,
+                image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                name: "Luxury Sweatshirt",
+                price: 3299,
+                image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            },
+            {
+                name: "Designer Jacket",
+                price: 5999,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"]
+            }
+        ];
+
         let cart = [];
+        
+        // Load products on page load
+        function loadProducts() {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+            
+            products.forEach((product, index) => {
+                const sizeOptions = product.sizes.map(size => `<option>${size}</option>`).join('');
+                
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-price">₹${product.price.toLocaleString('en-IN')}</p>
+                            <div class="size-selector">
+                                <select id="size-${index}">
+                                    <option>Select Size</option>
+                                    ${sizeOptions}
+                                </select>
+                            </div>
+                            <button class="btn" onclick="addToCart('${product.name}', ${product.price}, 'size-${index}')">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                
+                productGrid.innerHTML += productCard;
+            });
+        }
         
         function addToCart(name, price, sizeId) {
             const sizeElement = document.getElementById(sizeId);
@@ -506,11 +523,11 @@
             let total = 0;
             
             cart.forEach((item, index) => {
-                orderDetails += `${index + 1}. ${item.name} - Size: ${item.size} - $${item.price}\n`;
+                orderDetails += `${index + 1}. ${item.name} - Size: ${item.size} - ₹${item.price.toLocaleString('en-IN')}\n`;
                 total += item.price;
             });
             
-            orderDetails += `\nTotal: $${total}`;
+            orderDetails += `\nTotal: ₹${total.toLocaleString('en-IN')}`;
             document.getElementById('orderDetails').value = orderDetails;
         }
         
@@ -532,13 +549,14 @@
             let total = 0;
             
             cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} - Size: ${item.size} - $${item.price}\n`;
+                message += `${index + 1}. ${item.name} - Size: ${item.size} - ₹${item.price.toLocaleString('en-IN')}\n`;
                 total += item.price;
             });
             
-            message += `\nTotal: $${total}`;
+            message += `\nTotal: ₹${total.toLocaleString('en-IN')}`;
             
-            const whatsappUrl = `https://wa.me/15551234567?text=${encodeURIComponent(message)}`;
+            // CHANGE THIS NUMBER TO YOUR WHATSAPP BUSINESS NUMBER
+            const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
         
@@ -562,6 +580,9 @@
         function closeModal() {
             document.getElementById('successModal').style.display = 'none';
         }
+        
+        // Load products when page loads
+        window.onload = loadProducts;
     </script>
 </body>
 </html>
