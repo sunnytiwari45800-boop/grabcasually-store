@@ -46,6 +46,7 @@
             display: flex;
             gap: 30px;
             list-style: none;
+            align-items: center;
         }
         
         .nav-links a {
@@ -59,6 +60,26 @@
         
         .nav-links a:hover {
             color: #d4af37;
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #d4af37;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
         }
         
         .hero {
@@ -102,6 +123,14 @@
         .btn:hover {
             background: #b8941f;
             transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #25D366;
+        }
+        
+        .btn-secondary:hover {
+            background: #1da851;
         }
         
         .products {
@@ -155,6 +184,18 @@
             margin-bottom: 15px;
         }
         
+        .size-selector {
+            margin: 15px 0;
+        }
+        
+        .size-selector select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+        
         .payment-methods {
             padding: 60px 0;
             background: #f8f8f8;
@@ -178,6 +219,53 @@
             letter-spacing: 1px;
         }
         
+        .order-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .order-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f8f8;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .whatsapp-order {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+        
         footer {
             background: #222;
             color: white;
@@ -189,6 +277,36 @@
             letter-spacing: 1px;
         }
         
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .close-modal {
+            margin-top: 20px;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 36px;
@@ -196,6 +314,11 @@
             
             .nav-links {
                 gap: 15px;
+                font-size: 12px;
+            }
+            
+            .logo {
+                height: 40px;
             }
         }
     </style>
@@ -208,8 +331,11 @@
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#products">Collection</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#order">Order</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li class="cart-icon" onclick="viewCart()">
+                        🛒 <span class="cart-count" id="cartCount">0</span>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -232,7 +358,16 @@
                     <div class="product-info">
                         <h3 class="product-name">Classic Premium Tee</h3>
                         <p class="product-price">$89.00</p>
-                        <button class="btn">Add to Cart</button>
+                        <div class="size-selector">
+                            <select id="size-tee">
+                                <option>Select Size</option>
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addToCart('Classic Premium Tee', 89, 'size-tee')">Add to Cart</button>
                     </div>
                 </div>
                 
@@ -241,7 +376,16 @@
                     <div class="product-info">
                         <h3 class="product-name">Signature Hoodie</h3>
                         <p class="product-price">$149.00</p>
-                        <button class="btn">Add to Cart</button>
+                        <div class="size-selector">
+                            <select id="size-hoodie">
+                                <option>Select Size</option>
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addToCart('Signature Hoodie', 149, 'size-hoodie')">Add to Cart</button>
                     </div>
                 </div>
                 
@@ -250,8 +394,58 @@
                     <div class="product-info">
                         <h3 class="product-name">Tailored Joggers</h3>
                         <p class="product-price">$129.00</p>
-                        <button class="btn">Add to Cart</button>
+                        <div class="size-selector">
+                            <select id="size-joggers">
+                                <option>Select Size</option>
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addToCart('Tailored Joggers', 129, 'size-joggers')">Add to Cart</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="order-section" id="order">
+        <div class="container">
+            <h2 class="section-title">Place Your Order</h2>
+            <div class="order-form">
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Shipping Address *</label>
+                        <textarea id="address" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Order Details</label>
+                        <textarea id="orderDetails" readonly></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Submit Order</button>
+                </form>
+                
+                <div class="whatsapp-order">
+                    <p style="margin-bottom: 15px;">Or order directly via WhatsApp</p>
+                    <a href="#" class="btn btn-secondary" onclick="orderViaWhatsApp()">📱 Order on WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -272,11 +466,102 @@
         </div>
     </section>
 
-    <footer>
+    <footer id="contact">
         <div class="container">
             <p>&copy; 2025 GrabCasually. All Rights Reserved.</p>
             <p style="margin-top: 10px;">Luxury Casual Wear | Premium Quality | Worldwide Shipping</p>
+            <p style="margin-top: 15px;">📧 contact@grabcasually.com | 📱 +1 (555) 123-4567</p>
         </div>
     </footer>
+
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h3>✅ Order Received!</h3>
+            <p>Thank you for your order. We'll contact you shortly to confirm payment and shipping details.</p>
+            <button class="btn close-modal" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        
+        function addToCart(name, price, sizeId) {
+            const sizeElement = document.getElementById(sizeId);
+            const size = sizeElement.value;
+            
+            if (size === 'Select Size') {
+                alert('Please select a size');
+                return;
+            }
+            
+            cart.push({ name, price, size });
+            updateCart();
+            alert(`${name} (Size: ${size}) added to cart!`);
+        }
+        
+        function updateCart() {
+            document.getElementById('cartCount').textContent = cart.length;
+            
+            let orderDetails = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                orderDetails += `${index + 1}. ${item.name} - Size: ${item.size} - $${item.price}\n`;
+                total += item.price;
+            });
+            
+            orderDetails += `\nTotal: $${total}`;
+            document.getElementById('orderDetails').value = orderDetails;
+        }
+        
+        function viewCart() {
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+            } else {
+                document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function orderViaWhatsApp() {
+            if (cart.length === 0) {
+                alert('Please add items to cart first');
+                return;
+            }
+            
+            let message = 'Hi! I want to order from GrabCasually:\n\n';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} - Size: ${item.size} - $${item.price}\n`;
+                total += item.price;
+            });
+            
+            message += `\nTotal: $${total}`;
+            
+            const whatsappUrl = `https://wa.me/15551234567?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert('Please add items to cart first');
+                return;
+            }
+            
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+            
+            // Reset form and cart
+            this.reset();
+            cart = [];
+            updateCart();
+        });
+        
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
