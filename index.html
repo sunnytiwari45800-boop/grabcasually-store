@@ -219,12 +219,42 @@
             text-align: center;
             font-family: 'Playfair Display', serif;
             font-size: 56px;
-            margin-bottom: 70px;
+            margin-bottom: 30px;
             letter-spacing: 4px;
             background: linear-gradient(135deg, #ffffff, #d4af37);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 70px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: #e8e8e8;
+            cursor: pointer;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            border-color: #d4af37;
+            transform: translateY(-2px);
         }
         
         .product-grid {
@@ -278,6 +308,15 @@
             padding: 30px;
             text-align: center;
             position: relative;
+        }
+        
+        .product-category {
+            font-size: 11px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
         
         .product-name {
@@ -539,7 +578,17 @@
 
     <section class="products" id="products">
         <div class="container">
-            <h2 class="section-title">Featured Collection</h2>
+            <h2 class="section-title">Our Collections</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+                <button class="filter-btn" onclick="filterProducts('streetwear')">Streetwear</button>
+                <button class="filter-btn" onclick="filterProducts('casual')">Casual</button>
+                <button class="filter-btn" onclick="filterProducts('premium')">Premium</button>
+                <button class="filter-btn" onclick="filterProducts('activewear')">Activewear</button>
+                <button class="filter-btn" onclick="filterProducts('outerwear')">Outerwear</button>
+            </div>
+            
             <div class="product-grid" id="productGrid">
                 <!-- Products will be loaded here by JavaScript -->
             </div>
@@ -639,76 +688,206 @@
     </div>
 
     <script>
-        // PRODUCT DATABASE - EDIT THIS TO ADD/REMOVE PRODUCTS
+        // EXPANDED PRODUCT DATABASE WITH COLLECTIONS
         const products = [
+            // STREETWEAR COLLECTION
+            {
+                name: "Urban Graphic Tee",
+                price: 1999,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "streetwear"
+            },
+            {
+                name: "Oversized Hoodie",
+                price: 3499,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "streetwear"
+            },
+            {
+                name: "Cargo Joggers",
+                price: 2999,
+                image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "streetwear"
+            },
+            {
+                name: "Streetwear Bomber",
+                price: 4999,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "streetwear"
+            },
+            
+            // CASUAL COLLECTION
             {
                 name: "Classic Premium Tee",
                 price: 2499,
-                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
+                image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "casual"
             },
+            {
+                name: "Casual Polo Shirt",
+                price: 2799,
+                image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "casual"
+            },
+            {
+                name: "Comfort Sweatshirt",
+                price: 3299,
+                image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "casual"
+            },
+            {
+                name: "Casual Chinos",
+                price: 3199,
+                image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600",
+                sizes: ["28", "30", "32", "34", "36"],
+                category: "casual"
+            },
+            
+            // PREMIUM COLLECTION
             {
                 name: "Signature Hoodie",
                 price: 3999,
-                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
-            },
-            {
-                name: "Tailored Joggers",
-                price: 3499,
-                image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
-            },
-            {
-                name: "Premium Polo Shirt",
-                price: 2799,
-                image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
-            },
-            {
-                name: "Luxury Sweatshirt",
-                price: 3299,
-                image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
+                image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "premium"
             },
             {
                 name: "Designer Jacket",
                 price: 5999,
-                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600",
-                sizes: ["S", "M", "L", "XL", "XXL"]
+                image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "premium"
+            },
+            {
+                name: "Luxury Blazer",
+                price: 7999,
+                image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "premium"
+            },
+            {
+                name: "Premium Dress Shirt",
+                price: 3499,
+                image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "premium"
+            },
+            
+            // ACTIVEWEAR COLLECTION
+            {
+                name: "Performance Tee",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "activewear"
+            },
+            {
+                name: "Tailored Joggers",
+                price: 3499,
+                image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "activewear"
+            },
+            {
+                name: "Athletic Shorts",
+                price: 1999,
+                image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "activewear"
+            },
+            {
+                name: "Training Hoodie",
+                price: 3299,
+                image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "activewear"
+            },
+            
+            // OUTERWEAR COLLECTION
+            {
+                name: "Winter Parka",
+                price: 6999,
+                image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "outerwear"
+            },
+            {
+                name: "Denim Jacket",
+                price: 4499,
+                image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "outerwear"
+            },
+            {
+                name: "Leather Jacket",
+                price: 8999,
+                image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "outerwear"
+            },
+            {
+                name: "Windbreaker",
+                price: 3799,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                category: "outerwear"
             }
         ];
 
         let cart = [];
         let selectedPaymentMethod = '';
+        let currentFilter = 'all';
         
         // Load products on page load
-        function loadProducts() {
+        function loadProducts(filter = 'all') {
             const productGrid = document.getElementById('productGrid');
             productGrid.innerHTML = '';
             
-            products.forEach((product, index) => {
+            const filteredProducts = filter === 'all' 
+                ? products 
+                : products.filter(p => p.category === filter);
+            
+            filteredProducts.forEach((product, index) => {
                 const sizeOptions = product.sizes.map(size => `<option>${size}</option>`).join('');
                 
                 const productCard = `
                     <div class="product-card">
                         <img src="${product.image}" alt="${product.name}" class="product-image">
                         <div class="product-info">
+                            <div class="product-category">${product.category}</div>
                             <h3 class="product-name">${product.name}</h3>
                             <p class="product-price">₹${product.price.toLocaleString('en-IN')}</p>
                             <div class="size-selector">
-                                <select id="size-${index}">
+                                <select id="size-${index}-${product.category}">
                                     <option>Select Size</option>
                                     ${sizeOptions}
                                 </select>
                             </div>
-                            <button class="btn" onclick="addToCart('${product.name}', ${product.price}, 'size-${index}')"><span>Add to Cart</span></button>
+                            <button class="btn" onclick="addToCart('${product.name}', ${product.price}, 'size-${index}-${product.category}')"><span>Add to Cart</span></button>
                         </div>
                     </div>
                 `;
                 
                 productGrid.innerHTML += productCard;
             });
+        }
+        
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Load filtered products
+            loadProducts(category);
         }
         
         function selectPayment(method) {
@@ -804,7 +983,7 @@
         }
         
         // Load products when page loads
-        window.onload = loadProducts;
+        window.onload = () => loadProducts('all');
     </script>
 </body>
 </html>
