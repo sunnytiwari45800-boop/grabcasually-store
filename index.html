@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrabCasually - Luxury Casual Wear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,24 +13,27 @@
         }
         
         body {
-            font-family: 'Georgia', serif;
-            background: #f8f8f8;
-            color: #333;
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            overflow-x: hidden;
         }
         
         header {
-            background: #fff;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(10, 10, 10, 0.95);
+            padding: 25px 0;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
         
         nav {
@@ -39,23 +43,41 @@
         }
         
         .logo {
-            height: 60px;
+            height: 70px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
         }
         
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             list-style: none;
             align-items: center;
         }
         
         .nav-links a {
             text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            letter-spacing: 1px;
+            color: #e8e8e8;
+            font-size: 13px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
         
         .nav-links a:hover {
@@ -65,140 +87,239 @@
         .cart-icon {
             position: relative;
             cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .cart-icon:hover {
+            transform: scale(1.1);
         }
         
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #d4af37;
-            color: white;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
         }
         
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600');
             background-size: cover;
             background-position: center;
-            height: 600px;
+            background-attachment: fixed;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(10,10,10,0.8) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
         
         .hero h1 {
-            font-size: 64px;
+            font-family: 'Playfair Display', serif;
+            font-size: 90px;
             margin-bottom: 20px;
-            letter-spacing: 3px;
+            letter-spacing: 8px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
         }
         
         .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
+            font-size: 22px;
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            font-weight: 300;
+            color: #e8e8e8;
         }
         
         .btn {
             display: inline-block;
-            padding: 15px 40px;
-            background: #d4af37;
-            color: white;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 14px;
-            transition: all 0.3s;
+            letter-spacing: 3px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.4s;
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f4d03f, #d4af37);
+            transition: left 0.4s;
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .btn span {
+            position: relative;
+            z-index: 1;
         }
         
         .btn:hover {
-            background: #b8941f;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
         }
         
         .btn-secondary {
-            background: #25D366;
+            background: linear-gradient(135deg, #25D366, #1da851);
         }
         
-        .btn-secondary:hover {
-            background: #1da851;
+        .btn-secondary::before {
+            background: linear-gradient(135deg, #1da851, #25D366);
         }
         
         .products {
-            padding: 80px 0;
-            background: white;
+            padding: 120px 0;
+            background: #0a0a0a;
         }
         
         .section-title {
             text-align: center;
-            font-size: 42px;
-            margin-bottom: 50px;
-            letter-spacing: 2px;
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            margin-bottom: 70px;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
         
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
         }
         
         .product-card {
-            background: #f8f8f8;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
             overflow: hidden;
-            transition: transform 0.3s;
+            transition: all 0.4s;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
         }
         
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.4);
         }
         
         .product-image {
             width: 100%;
-            height: 400px;
+            height: 450px;
             object-fit: cover;
+            transition: transform 0.6s;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.1);
         }
         
         .product-info {
-            padding: 20px;
+            padding: 30px;
             text-align: center;
+            position: relative;
         }
         
         .product-name {
-            font-size: 20px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-size: 22px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ffffff;
         }
         
         .product-price {
-            font-size: 18px;
+            font-size: 24px;
             color: #d4af37;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
         
         .size-selector {
-            margin: 15px 0;
+            margin: 20px 0;
         }
         
         .size-selector select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: white;
-            font-family: 'Georgia', serif;
+            padding: 12px 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: #1a1a1a;
+            color: #e8e8e8;
+            font-family: 'Montserrat', sans-serif;
             cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .size-selector select:focus {
+            outline: none;
+            border-color: #d4af37;
         }
         
         .payment-methods {
-            padding: 60px 0;
-            background: #f8f8f8;
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0a0a0a, #1a1a1a);
             text-align: center;
         }
         
@@ -206,75 +327,126 @@
             display: flex;
             justify-content: center;
             gap: 30px;
-            margin-top: 30px;
+            margin-top: 50px;
             flex-wrap: wrap;
         }
         
         .payment-icon {
-            font-size: 14px;
-            padding: 15px 30px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            letter-spacing: 1px;
+            font-size: 13px;
+            padding: 20px 35px;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            letter-spacing: 2px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .payment-icon:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
         
         .order-section {
-            padding: 80px 0;
-            background: white;
+            padding: 120px 0;
+            background: #0a0a0a;
         }
         
         .order-form {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            background: #f8f8f8;
-            padding: 40px;
-            border-radius: 10px;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            padding: 60px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-size: 13px;
+            color: #d4af37;
+            font-weight: 500;
         }
         
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            background: white;
-            font-family: 'Georgia', serif;
+            padding: 15px 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: #0a0a0a;
+            color: #e8e8e8;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
         }
         
         .form-group textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 120px;
+        }
+        
+        .payment-method-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-option {
+            padding: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            background: #0a0a0a;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+        
+        .payment-option:hover {
+            border-color: #d4af37;
+            background: #1a1a1a;
+        }
+        
+        .payment-option.selected {
+            border-color: #d4af37;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
         
         .whatsapp-order {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #ddd;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         footer {
-            background: #222;
-            color: white;
-            padding: 40px 0;
+            background: #000000;
+            color: #e8e8e8;
+            padding: 60px 0;
             text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         footer p {
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-size: 13px;
+            color: #999;
         }
         
         .modal {
@@ -284,23 +456,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
             align-items: center;
             justify-content: center;
         }
         
         .modal-content {
-            background: white;
-            padding: 40px;
-            max-width: 500px;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            padding: 60px;
+            max-width: 600px;
             text-align: center;
-            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         .modal-content h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 25px;
+            font-size: 32px;
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+        }
+        
+        .modal-content p {
+            color: #e8e8e8;
+            line-height: 1.8;
+            margin-bottom: 30px;
         }
         
         .close-modal {
@@ -309,16 +489,24 @@
         
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 36px;
+                font-size: 48px;
             }
             
             .nav-links {
-                gap: 15px;
-                font-size: 12px;
+                gap: 20px;
+                font-size: 11px;
             }
             
             .logo {
-                height: 40px;
+                height: 50px;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -342,10 +530,10 @@
     </header>
 
     <section class="hero" id="home">
-        <div>
+        <div class="hero-content">
             <h1>GRABCASUALLY</h1>
             <p>Where Luxury Meets Comfort</p>
-            <a href="#products" class="btn">Shop Collection</a>
+            <a href="#products" class="btn"><span>Explore Collection</span></a>
         </div>
     </section>
 
@@ -384,16 +572,35 @@
                     </div>
                     
                     <div class="form-group">
+                        <label>Payment Method *</label>
+                        <div class="payment-method-selector">
+                            <div class="payment-option" onclick="selectPayment('cod')">
+                                💵 Cash on Delivery
+                            </div>
+                            <div class="payment-option" onclick="selectPayment('upi')">
+                                📱 UPI
+                            </div>
+                            <div class="payment-option" onclick="selectPayment('card')">
+                                💳 Card
+                            </div>
+                            <div class="payment-option" onclick="selectPayment('online')">
+                                💰 Online Payment
+                            </div>
+                        </div>
+                        <input type="hidden" id="paymentMethod" required>
+                    </div>
+                    
+                    <div class="form-group">
                         <label>Order Details</label>
                         <textarea id="orderDetails" readonly></textarea>
                     </div>
                     
-                    <button type="submit" class="btn" style="width: 100%;">Submit Order</button>
+                    <button type="submit" class="btn" style="width: 100%;"><span>Submit Order</span></button>
                 </form>
                 
                 <div class="whatsapp-order">
-                    <p style="margin-bottom: 15px;">Or order directly via WhatsApp</p>
-                    <a href="#" class="btn btn-secondary" onclick="orderViaWhatsApp()">📱 Order on WhatsApp</a>
+                    <p style="margin-bottom: 20px; color: #999;">Or order directly via WhatsApp</p>
+                    <a href="#" class="btn btn-secondary" onclick="orderViaWhatsApp()"><span>📱 Order on WhatsApp</span></a>
                 </div>
             </div>
         </div>
@@ -403,6 +610,7 @@
         <div class="container">
             <h2 class="section-title">Secure Payment Options</h2>
             <div class="payment-icons">
+                <div class="payment-icon">💵 CASH ON DELIVERY</div>
                 <div class="payment-icon">💳 VISA</div>
                 <div class="payment-icon">💳 MASTERCARD</div>
                 <div class="payment-icon">💳 AMEX</div>
@@ -417,8 +625,8 @@
     <footer id="contact">
         <div class="container">
             <p>&copy; 2025 GrabCasually. All Rights Reserved.</p>
-            <p style="margin-top: 10px;">Luxury Casual Wear | Premium Quality | Worldwide Shipping</p>
-            <p style="margin-top: 15px;">📧 contact@grabcasually.com | 📱 +91 88578 67965</p>
+            <p style="margin-top: 15px;">Luxury Casual Wear | Premium Quality | Worldwide Shipping</p>
+            <p style="margin-top: 20px;">📧 contact@grabcasually.com | 📱 +91 88578 67965</p>
         </div>
     </footer>
 
@@ -426,7 +634,7 @@
         <div class="modal-content">
             <h3>✅ Order Received!</h3>
             <p>Thank you for your order. We'll contact you shortly to confirm payment and shipping details.</p>
-            <button class="btn close-modal" onclick="closeModal()">Close</button>
+            <button class="btn close-modal" onclick="closeModal()"><span>Close</span></button>
         </div>
     </div>
 
@@ -472,6 +680,7 @@
         ];
 
         let cart = [];
+        let selectedPaymentMethod = '';
         
         // Load products on page load
         function loadProducts() {
@@ -493,13 +702,20 @@
                                     ${sizeOptions}
                                 </select>
                             </div>
-                            <button class="btn" onclick="addToCart('${product.name}', ${product.price}, 'size-${index}')">Add to Cart</button>
+                            <button class="btn" onclick="addToCart('${product.name}', ${product.price}, 'size-${index}')"><span>Add to Cart</span></button>
                         </div>
                     </div>
                 `;
                 
                 productGrid.innerHTML += productCard;
             });
+        }
+        
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            selectedPaymentMethod = method;
+            document.getElementById('paymentMethod').value = method;
         }
         
         function addToCart(name, price, sizeId) {
@@ -567,12 +783,19 @@
                 return;
             }
             
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
             // Show success modal
             document.getElementById('successModal').style.display = 'flex';
             
             // Reset form and cart
             this.reset();
             cart = [];
+            selectedPaymentMethod = '';
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
             updateCart();
         });
         
